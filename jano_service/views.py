@@ -1,5 +1,6 @@
 from flask_restful import Resource, reqparse
 from jano_service.models import UserLoginModel
+from jano_service.extras import check_password
 
 
 class UsersLogins(Resource):
@@ -10,11 +11,11 @@ class UsersLogins(Resource):
 class UserLogin(Resource):
     fields = reqparse.RequestParser()
     fields.add_argument("username", type=str, required=True, help="username is required!")
-    fields.add_argument("hash_pwd", type=str, required=True, help="hash_pwd is required!")
+    fields.add_argument("password", type=str, required=True, help="password is required!")
 
     def get(self):
 
-        data = UserLogin.fields.parse_args()
+        data = UserLogin.fields.remove_argument("password").parse_args()
         user = UserLoginModel.find_user_login(data["username"])
 
         if user:
@@ -23,14 +24,14 @@ class UserLogin(Resource):
 
     def post(self):
 
-        data = UserLogin.fields.parse_args()
+        data = UserLogin.fields.add_argument("password").parse_args()
         user = UserLoginModel(**data)
 
         if UserLoginModel.find_user_login(data["username"]):
             return {"message": "username '{}' already exists!".format(data["username"])}, 400
 
         try:
-            user.save_user_login(data["hash_pwd"])
+            user.save_user_login(data["password"])
         except Exception:
             return {"message": "Internal Server Error!"}, 500
         return user.json()
@@ -42,11 +43,11 @@ class UserLogin(Resource):
 
         if user_data:
             user_data.update_user_login(**data)
-            user_data.save_user_login(data["hash_pwd"])
+            user_data.save_user_login(data["password"])
             return user_data.json(), 200
 
         user = UserLoginModel(**data)
-        user.save_user_login(data["hash_pwd"])
+        user.save_user_login(data["password"])
         return user.json(), 201
 
     def delete(self):
@@ -54,10 +55,10 @@ class UserLogin(Resource):
         data = UserLogin.fields.parse_args()
         user = UserLoginModel.find_user_login(data["username"])
 
-        if user:
+        if user and check_password(user.password, data["password"]):
             try:
                 user.delete_user_login()
             except:
                 return {"message": "Internal Server Error!"}, 500
             return {"menssage": "username deleted!"}
-        return {"menssage": "username not found!"}, 404
+        return {"menssage": "username not found or Password wrong!"}, 404
