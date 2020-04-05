@@ -4,7 +4,7 @@ from jano_service.tools.extras import create_random_id, create_password_hash
 
 class UserLoginModel(db.Model):
     __tablename__ = 'userlogin'
-    id = db.Column(db.String(128), primary_key=True, autoincrement=False, index=True)
+    id = db.Column(db.String(), primary_key=True, autoincrement=False, index=True)
     username = db.Column(db.String(32), primary_key=True, autoincrement=False, index=True)
     password = db.Column(db.String())
     created_at = db.Column(db.DateTime, default=db.func.datetime('now', 'localtime'))
@@ -25,7 +25,6 @@ class UserLoginModel(db.Model):
     @classmethod
     def find_user_login(cls, username):
         user = cls.query.filter_by(username=username).first()
-
         if user:
             return user
         return None

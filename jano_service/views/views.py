@@ -14,22 +14,17 @@ class UserLogin(Resource):
     fields.add_argument("password", type=str, required=True, help="password is required!")
 
     def get(self):
-
         data = UserLogin.fields.remove_argument("password").parse_args()
         user = UserLoginModel.find_user_login(data["username"])
-
         if user:
             return user.json()
         return {"message": "username not found!"}, 404
 
     def post(self):
-
         data = UserLogin.fields.add_argument("password").parse_args()
         user = UserLoginModel(**data)
-
         if UserLoginModel.find_user_login(data["username"]):
             return {"message": "username '{}' already exists!".format(data["username"])}, 400
-
         try:
             user.save_user_login(data["password"])
         except Exception:
@@ -37,10 +32,8 @@ class UserLogin(Resource):
         return user.json()
 
     def put(self):
-
         data = UserLogin.fields.parse_args()
         user_data = UserLoginModel.find_user_login(data["username"])
-
         if user_data:
             user_data.update_user_login(**data)
             user_data.save_user_login(data["password"])
@@ -51,10 +44,8 @@ class UserLogin(Resource):
         return user.json(), 201
 
     def delete(self):
-
         data = UserLogin.fields.parse_args()
         user = UserLoginModel.find_user_login(data["username"])
-
         if user and check_password(user.password, data["password"]):
             try:
                 user.delete_user_login()

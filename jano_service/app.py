@@ -15,7 +15,7 @@ def create_db():
 
 
 api.add_resource(UsersLogins, '/api/users')
-api.add_resource(UserLogin, '/api/user/')
+api.add_resource(UserLogin, '/api/user')
 
 db.init_app(app)
 app.run()
