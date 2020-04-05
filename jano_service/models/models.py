@@ -1,5 +1,5 @@
-from jano_service.database import db
-from jano_service.extras import create_random_id, create_password_hash, check_password
+from jano_service.database.database import db
+from jano_service.tools.extras import create_random_id, create_password_hash
 
 
 class UserLoginModel(db.Model):

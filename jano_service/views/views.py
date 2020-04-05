@@ -1,6 +1,6 @@
 from flask_restful import Resource, reqparse
-from jano_service.models import UserLoginModel
-from jano_service.extras import check_password
+from jano_service.models.models import UserLoginModel
+from jano_service.tools.extras import check_password
 
 
 class UsersLogins(Resource):

@@ -1,7 +1,7 @@
 class BaseConfig(object):
     DEBUG = False
     TESTING = False
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///jano.db'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///database/jano.db'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
