@@ -18,4 +18,4 @@ api.add_resource(Orders, '/api/orders')
 api.add_resource(Order, '/api/order')
 
 db.init_app(app)
-app.run()
+app.run(port=8001)

@@ -29,9 +29,7 @@ class OrderModel(db.Model):
 
     @classmethod
     def find_order(cls, id):
-
         order = cls.query.filter_by(id=id).first()
-
         if order:
             return order
         return None
@@ -48,4 +46,3 @@ class OrderModel(db.Model):
     def delete_order(self):
         db.session.delete(self)
         db.session.commit()
-

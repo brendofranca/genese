@@ -18,4 +18,4 @@ api.add_resource(UsersLogins, '/api/users')
 api.add_resource(UserLogin, '/api/user')
 
 db.init_app(app)
-app.run()
+app.run(port=8000)
