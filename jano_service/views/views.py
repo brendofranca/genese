@@ -14,11 +14,11 @@ class UserLogin(Resource):
     fields.add_argument("password", type=str, required=True, help="password is required!")
 
     def get(self):
-        data = UserLogin.fields.remove_argument("password").parse_args()
+        data = UserLogin.fields.parse_args()
         user = UserLoginModel.find_user_login(data["username"])
-        if user:
+        if user and check_password(user.password, data["password"]):
             return user.json()
-        return {"message": "username not found!"}, 404
+        return {"message": "username not found or password wrong!"}, 404
 
     def post(self):
         data = UserLogin.fields.add_argument("password").parse_args()
@@ -53,3 +53,15 @@ class UserLogin(Resource):
                 return {"message": "Internal Server Error!"}, 500
             return {"menssage": "username deleted!"}
         return {"menssage": "username not found or Password wrong!"}, 404
+
+
+class UserLoginServiceCheck(Resource):
+    fields = reqparse.RequestParser()
+    fields.add_argument("username", type=str, required=True, help="username is required!")
+
+    def get(self):
+        data = UserLoginServiceCheck.fields.parse_args()
+        user = UserLoginModel.find_user_login(data["username"])
+        if user:
+            return user.json()
+        return {"message": "username not found!"}, 404
