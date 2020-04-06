@@ -26,7 +26,7 @@ class User(Resource):
             return {"message": "Internal Server Error!"}, 500
         return user.json()
 
-    # to edit a user or create if nt exists in db
+    # to edit a user or create if not exists in db
     def put(self):
         data = User.fields.parse_args()
         user_data = UserModel.find_user_login(data["username"])
@@ -53,9 +53,6 @@ class User(Resource):
 
 
 class UserServiceCheck(Resource):
-    fields = reqparse.RequestParser()
-    fields.add_argument("username", type=str, required=True, help="username is required!")
-
     # just check if user exist and returns info
     def get(self, username):
         user = UserModel.find_user_login(username)
@@ -69,8 +66,8 @@ class UserAuth(Resource):
     fields.add_argument("username", type=str, required=True, help="username is required!")
     fields.add_argument("password", type=str, required=True, help="password is required!")
 
-    # TODO: I have study and implemented new forms to do this.
-    # serves to auth, its just temporary function
+    # TODO: I have to study and implement new forms to do this.
+    # serves to auth, it's a just temporary function
     def post(self):
         data = User.fields.parse_args()
         user = UserModel.find_user_login(data["username"])

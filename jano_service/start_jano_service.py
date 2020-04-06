@@ -14,9 +14,9 @@ def create_db():
     db.create_all()
 
 
-api.add_resource(Users, '/api/v1.0/users/')  # endpoint for all users -> methods - [GET]
-api.add_resource(UserAuth, '/api/v1.0/auth/')  # endpoint for authentication -> methods - [POST]
-api.add_resource(User, '/api/v1.0/user/')  # endpoint for create, edit or delete a user -> methods - [POST, PUT, DELETE]
+api.add_resource(Users, '/api/v1.0/users/')  # endpoint to list all users -> methods - [GET]
+api.add_resource(UserAuth, '/api/v1.0/auth/')  # endpoint to authentication -> methods - [POST]
+api.add_resource(User, '/api/v1.0/user/')  # endpoint to create, edit or delete a user -> methods - [POST, PUT, DELETE]
 api.add_resource(UserServiceCheck, '/api/v1.0/user/<string:username>/')  # endpoint to check if user exist -> methods
 # - [GET]
 
