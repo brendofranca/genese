@@ -1,5 +1,5 @@
 from flask_restful import Resource, reqparse
-from Hermes_service.models.models import OrderModel, UserLoginServices
+from hermes_service.models.models import OrderModel, UserLoginServices
 
 
 class Orders(Resource):

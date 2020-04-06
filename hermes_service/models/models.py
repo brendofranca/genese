@@ -1,5 +1,5 @@
 import requests
-from Hermes_service.database.database import db
+from hermes_service.database.database import db
 
 
 class OrderModel(db.Model):
