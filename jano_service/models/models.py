@@ -2,8 +2,8 @@ from jano_service.database.database import db
 from jano_service.tools.extras import create_random_id, create_password_hash
 
 
-class UserLoginModel(db.Model):
-    __tablename__ = 'userlogin'
+class UserModel(db.Model):
+    __tablename__ = 'users'
     id = db.Column(db.String(), primary_key=True, autoincrement=False, index=True)
     username = db.Column(db.String(32), primary_key=True, autoincrement=False, index=True)
     password = db.Column(db.String())
